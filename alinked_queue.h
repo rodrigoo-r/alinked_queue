@@ -12,6 +12,46 @@
 #define FLUENT_LIBC_A_LINKED_QUEUE_LIBRARY_H
 
 // ============= FLUENT LIB C =============
+// Arena-Backed Linked Queue
+// ----------------------------------------
+// This header defines a minimal arena-allocated singly linked queue with append, prepend,
+// and shift (pop from head) operations. Perfect for cases where performance and control
+// over allocation are key.
+//
+// Macro-powered & Type-safe:
+//   DEFINE_ALINKED_NODE(T, name) – creates a queue type and API for type `T`.
+//
+// Queue Features:
+//   • Fast O(1) prepend, append, and shift operations.
+//   • Built-in arena allocator (chunk-based memory efficiency).
+//   • Optional free-list to reuse nodes (avoid arena fragmentation).
+//
+// API Usage:
+// ----------------------------------------
+//   DEFINE_ALINKED_NODE(int, int); // create int-based queue
+//   alinked_queue_int_t q;
+//   alinked_queue_int_init(&q, 512); // 512 chunks arena
+//   alinked_queue_int_append(&q, 42);
+//   int x = alinked_queue_int_shift(&q);
+//   alinked_queue_int_destroy(&q);
+//
+// Internals:
+//   - Each node is `struct { T data; next* }`
+//   - Queue stores head/tail/len + arena + free-list
+//   - Allocation done via arena_malloc or free-list reuse
+//
+// Dependencies:
+//   - `arena.h` for memory pool
+//   - `vector.h` for free-list (optional)
+//   - `types.h` for `size_t`, `NULL`
+//
+// Notes:
+//   - Generic fallback for `void*` queue is provided as `alinked_queue_generic_t`
+//   - Non-thread safe by default (no locks)
+//
+// Great for:
+//   - Embedded systems, game dev, or dataflow tasks where malloc is too slow
+//   - Zero-GC, high-throughput situations
 
 // ============= INCLUDES =============
 #ifndef FLUENT_LIBC_RELEASE
