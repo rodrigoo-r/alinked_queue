@@ -53,6 +53,12 @@
 //   - Embedded systems, game dev, or dataflow tasks where malloc is too slow
 //   - Zero-GC, high-throughput situations
 
+// ============= FLUENT LIB C++ =============
+#if defined(__cplusplus)
+extern "C"
+{
+#endif
+
 // ============= INCLUDES =============
 #ifndef FLUENT_LIBC_RELEASE
 #   include <arena.h> // fluent_libc
@@ -227,6 +233,11 @@
 #ifndef FLUENT_LIBC_A_LINKED_QUEUE_GENERIC_DEFINED
     DEFINE_ALINKED_NODE(void *, generic);
 #   define FLUENT_LIBC_A_LINKED_QUEUE_GENERIC_DEFINED 1
+#endif
+
+// ============= FLUENT LIB C++ =============
+#if defined(__cplusplus)
+}
 #endif
 
 #endif //FLUENT_LIBC_A_LINKED_QUEUE_LIBRARY_H
