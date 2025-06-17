@@ -227,6 +227,7 @@ extern "C"
             vec__fluent_libc_list_##NAME##_push(queue->free_list, node); \
         }                                                   \
                                                             \
+        queue->len--;                                       \
         return node->data;                                  \
     }
 
